@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
@@ -6,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const {NODE_ENV, CONFIG_NAME} = process.env;
+const {NODE_ENV, CONFIG_NAME, CLIENT_ID} = process.env;
 const IsDev = NODE_ENV === 'development';
 console.log(CONFIG_NAME);
 
@@ -79,6 +80,9 @@ const plugins = () => [
     filename: filename('css'),
   }),
   new webpack.HotModuleReplacementPlugin(),
+  new webpack.DefinePlugin({
+    'CLIENT_ID': `'${CLIENT_ID}'`,
+  }),
 ];
 
 module.exports = {
@@ -90,9 +94,10 @@ module.exports = {
       '@assets': path.resolve(__dirname, './assets'),
       // '@style': path.resolve(__dirname, './src/style'),
       // '@containers': path.resolve(__dirname, './src/containers'),
-      // '@helpers': path.resolve(__dirname, './src/helpers'),
-      // '@actions': path.resolve(__dirname, './src/actions'),
+      '@helpers': path.resolve(__dirname, './helpers'),
+      '@actions': path.resolve(__dirname, './src/actions'),
       '@store': path.resolve(__dirname, './store'),
+      '@config': path.resolve(__dirname, './config'),
     },
   },
   mode: NODE_ENV || 'production',

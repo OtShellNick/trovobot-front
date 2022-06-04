@@ -12,9 +12,9 @@ const NotFound = lazy(() => import('@components/NotFound/NotFound'));
 const App = () => <Routes>
   <Route path="/" element={<Layout />}>
     <Route index element={<Dashboard />} />
+    <Route path="login" element={<Login />} />
+    <Route path="*" element={<NotFound />} />
   </Route>
-  <Route path="/login" element={<Login />} />
-  <Route path="*" element={<NotFound />} />
 </Routes>;
 
 export default App;
